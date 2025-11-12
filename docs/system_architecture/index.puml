@@ -1,0 +1,70 @@
+@startuml CloudDB Manager System Architecture
+
+' Style settings
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam linetype ortho
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam databaseBackgroundColor #E2EFFF
+
+' Main components
+package "Frontend (React TypeScript)" {
+  component "Authentication" as FE_Auth
+  component "Query Editor" as FE_Query
+  component "DB Explorer" as FE_Explorer
+  component "Table Viewer" as FE_Table
+  component "User Management" as FE_User
+  component "Admin Dashboard" as FE_Admin
+}
+
+package "Backend (Node.js TypeScript)" {
+  component "Auth Service" as BE_Auth
+  component "DB Service" as BE_DB
+  component "Query Service" as BE_Query
+  component "User Service" as BE_User
+  component "Admin Service" as BE_Admin
+  component "Connection Pool" as BE_Pool
+}
+
+node "AWS Cloud" {
+  node "EC2 Server" as AppServer {
+    component "Node.js Runtime" as NodeRuntime
+  }
+  
+  database "RDS-A: Management DB" as ManagementDB {
+    [Users/Tenants/Config]
+  }
+  
+  database "RDS-B: Sandbox DB" as SandboxDB {
+    [Tenant Databases]
+  }
+}
+
+' Notes
+note right of BE_Auth : JWT auth & BCrypt
+note bottom of BE_Pool : Manages DB connections
+
+' Frontend to Backend
+FE_Auth --> BE_Auth
+FE_Query --> BE_Query
+FE_Explorer --> BE_DB
+FE_Table --> BE_DB
+FE_User --> BE_User
+FE_Admin --> BE_Admin
+
+' Backend to Database
+BE_Auth --> ManagementDB
+BE_User --> ManagementDB
+BE_Admin --> ManagementDB
+BE_DB --> ManagementDB
+BE_DB --> BE_Pool
+BE_Query --> BE_Pool
+BE_Pool --> SandboxDB
+
+' Host connections
+AppServer --> NodeRuntime
+NodeRuntime --> Backend : Executes
+
+@enduml
