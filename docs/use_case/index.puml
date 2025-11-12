@@ -1,0 +1,96 @@
+@startuml CloudDB Manager Use Cases
+
+' Style settings
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam usecaseBackgroundColor #E2EFFF
+skinparam actorBackgroundColor #FEFECE
+skinparam packageBackgroundColor transparent
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' Actors
+actor "Viewer" as Viewer
+actor "Developer" as Developer
+actor "Tenant Admin" as TenantAdmin
+actor "Super Admin" as SuperAdmin
+
+' Inheritance relationships
+Developer -up-|> Viewer
+TenantAdmin -up-|> Developer
+SuperAdmin -up-|> TenantAdmin
+
+' Use case packages
+package "Authentication" {
+  usecase "Register Account" as Register
+  usecase "Login" as Login
+  usecase "Reset Password" as ResetPwd
+  usecase "Manage Profile" as ManageProfile
+}
+
+package "Database Instance Management" {
+  usecase "Create DB Instance" as CreateDB
+  usecase "Connect to DB Instance" as ConnectDB
+  usecase "Start/Stop DB Instance" as ToggleDB
+  usecase "Delete DB Instance" as DeleteDB
+}
+
+package "Database Operations" {
+  usecase "Browse Database Objects" as BrowseDB
+  usecase "View Table Data" as ViewTable
+  usecase "Execute SELECT Queries" as SelectQuery
+  usecase "Execute DML Queries" as DMLQuery
+  usecase "Execute DDL Queries" as DDLQuery
+  usecase "Modify Table Structure" as ModifyTable
+}
+
+package "User Management" {
+  usecase "Invite Users" as InviteUser
+  usecase "Manage User Roles" as ManageRoles
+  usecase "Deactivate User" as DeactivateUser
+}
+
+package "Administration" {
+  usecase "Manage Tenants" as ManageTenants
+  usecase "Set Resource Quotas" as SetQuotas
+  usecase "View System Metrics" as ViewMetrics
+  usecase "Configure System Settings" as ConfigSystem
+}
+
+' Relationships - Authentication
+Viewer --> Login
+Viewer --> ResetPwd
+Viewer --> ManageProfile
+Viewer --> Register
+
+' Relationships - Database Instance
+Developer --> CreateDB
+Developer --> ToggleDB
+Developer --> DeleteDB
+Viewer --> ConnectDB
+
+' Relationships - Database Operations
+Viewer --> BrowseDB
+Viewer --> ViewTable
+Viewer --> SelectQuery
+Developer --> DMLQuery
+Developer --> DDLQuery
+Developer --> ModifyTable
+
+' Relationships - User Management
+TenantAdmin --> InviteUser
+TenantAdmin --> ManageRoles
+TenantAdmin --> DeactivateUser
+
+' Relationships - Administration
+SuperAdmin --> ManageTenants
+SuperAdmin --> SetQuotas
+TenantAdmin --> ViewMetrics
+SuperAdmin --> ConfigSystem
+
+' Include/extend relationships
+ManageRoles .> SetQuotas : <<include>>
+DMLQuery .> SelectQuery : <<extend>>
+ViewTable .> SelectQuery : <<include>>
+
+@enduml
