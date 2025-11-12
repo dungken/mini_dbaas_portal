@@ -1,0 +1,120 @@
+@startuml CloudDB Manager Core Workflows
+
+' Style settings
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam activityBackgroundColor #E2EFFF
+skinparam activityBorderColor #3C7FC0
+skinparam activityDiamondBackgroundColor #FFF8DC
+skinparam activityDiamondBorderColor #FF8C00
+skinparam noteBackgroundColor #FFFACD
+skinparam noteBorderColor #999999
+skinparam swimlaneBorderColor #999999
+skinparam swimlaneTitleFontStyle bold
+
+|User|
+start
+:Access CloudDB Manager;
+
+|Authentication Service|
+if (Has Account?) then (yes)
+  :Display Login Form;
+  :Validate Credentials;
+  if (Valid?) then (yes)
+    :Generate JWT Token;
+    :Set User Context;
+  else (no)
+    :Display Error Message;
+    stop
+  endif
+else (no)
+  :Display Registration Form;
+  :Create New Account;
+  :Send Verification Email;
+endif
+
+|User|
+:Access Dashboard;
+
+fork
+  |User|
+  :Select "Create Database";
+  
+  |Database Service|
+  :Validate User Quota;
+  if (Quota Available?) then (yes)
+    :Provision Database Schema;
+    :Create Connection Record;
+    :Return Connection Details;
+  else (no)
+    :Display Quota Error;
+  endif
+  
+  |User|
+  :View Database List;
+
+fork again
+  |User|
+  :Select Existing Database;
+  :Open Query Editor;
+  :Write SQL Query;
+  :Submit Query;
+  
+  |Query Service|
+  :Parse Query Type;
+  
+  if (SELECT Query?) then (yes)
+    |Query Service|
+    :Execute Read-Only Query;
+  else (no)
+    |Query Service|
+    if (User has Write Permission?) then (yes)
+      if (DML Query?) then (yes)
+        :Execute Data Modification;
+      else (DDL)
+        :Execute Schema Change;
+        :Refresh Schema Cache;
+      endif
+    else (no)
+      :Display Permission Error;
+    endif
+  endif
+  
+  |Query Service|
+  if (Query Successful?) then (yes)
+    :Format Result Set;
+    :Return Results;
+  else (no)
+    :Format Error Message;
+    :Return Error Details;
+  endif
+  
+  |User|
+  :View Query Results;
+  :Export Results (Optional);
+
+fork again
+  |Tenant Admin|
+  :Access User Management;
+  :View Current Users;
+  
+  fork
+    :Create New User Invitation;
+    :Set Initial Role;
+    :Send Invitation Email;
+  fork again
+    :Select Existing User;
+    :Modify User Role;
+    :Update Permissions;
+  fork again
+    :View Resource Usage;
+    :Adjust User Quotas;
+    :Save Changes;
+  end fork
+end fork
+
+|User|
+:Logout;
+stop
+
+@enduml
