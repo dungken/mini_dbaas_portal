@@ -1,0 +1,119 @@
+
+@startuml CloudDB Manager Query Execution
+
+' Style settings
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam sequenceArrowThickness 2
+skinparam sequenceGroupBorderThickness 2
+skinparam sequenceGroupBodyBackgroundColor #EEEEEE
+skinparam sequenceGroupBorderColor #666666
+skinparam noteBackgroundColor #FFFACD
+skinparam noteBorderColor #999999
+
+' Participants
+actor "User" as User
+boundary "Query Editor\n(React)" as QueryEditor
+control "API Gateway" as APIGateway
+participant "Authentication\nService" as AuthService
+participant "Query\nService" as QueryService
+participant "Database\nService" as DBService
+participant "Connection\nPool" as ConnPool
+database "RDS-A\n(Management DB)" as RDSA
+database "RDS-B\n(Sandbox DB)" as RDSB
+
+' Sequence
+User -> QueryEditor: Input SQL query
+activate QueryEditor
+
+QueryEditor -> QueryEditor: Local validation/syntax highlighting
+QueryEditor -> APIGateway: POST /api/queries/execute\n{instanceId, queryText}
+activate APIGateway
+
+APIGateway -> AuthService: Validate JWT token
+activate AuthService
+AuthService -> RDSA: Verify token & user permissions
+RDSA --> AuthService: Return user context
+AuthService --> APIGateway: Token valid, roles: [Developer]
+deactivate AuthService
+
+APIGateway -> QueryService: Forward request
+activate QueryService
+
+QueryService -> QueryService: Parse query type\n(SELECT/DML/DDL)
+
+alt Query type = SELECT
+    QueryService -> QueryService: Validate read permissions
+else Query type = DML (INSERT/UPDATE/DELETE)
+    QueryService -> QueryService: Validate write permissions
+else Query type = DDL (CREATE/ALTER/DROP)
+    QueryService -> QueryService: Validate schema modify permissions
+end
+
+QueryService -> DBService: Get database connection\n(instanceId)
+activate DBService
+
+DBService -> RDSA: Fetch connection metadata
+activate RDSA
+RDSA --> DBService: Return {host, credentials, schema}
+deactivate RDSA
+
+DBService -> ConnPool: Acquire connection
+activate ConnPool
+ConnPool -> ConnPool: Check for existing connection
+ConnPool -> RDSB: Connect if needed\n(tenant-specific credentials)
+activate RDSB
+RDSB --> ConnPool: Connection established
+deactivate RDSB
+
+ConnPool --> DBService: Return connection
+deactivate ConnPool
+
+DBService --> QueryService: Connection ready
+deactivate DBService
+
+QueryService -> ConnPool: Execute query(connection, queryText)
+activate ConnPool
+ConnPool -> RDSB: Execute SQL with timeout
+activate RDSB
+
+alt Successful execution
+    RDSB --> ConnPool: Return results/affected rows
+    ConnPool --> QueryService: Query results
+    
+    QueryService -> RDSA: Log query execution\n(success, timing, rowcount)
+    
+    QueryService --> APIGateway: Return formatted results
+    APIGateway --> QueryEditor: HTTP 200 + results payload
+    QueryEditor -> QueryEditor: Format and display results
+    QueryEditor --> User: Display results grid/message
+else Execution error
+    RDSB --> ConnPool: Return error details
+    ConnPool --> QueryService: Error information
+    
+    QueryService -> RDSA: Log query execution\n(failed, error message)
+    
+    QueryService --> APIGateway: Return error details
+    APIGateway --> QueryEditor: HTTP 400/500 + error payload
+    QueryEditor -> QueryEditor: Format error message
+    QueryEditor --> User: Display error notification
+else Timeout
+    RDSB --> ConnPool: Query timeout
+    ConnPool --> QueryService: Timeout notification
+    
+    QueryService -> RDSA: Log query execution\n(timeout)
+    QueryService -> ConnPool: Cancel query if possible
+    
+    QueryService --> APIGateway: Return timeout error
+    APIGateway --> QueryEditor: HTTP 408 Request Timeout
+    QueryEditor -> QueryEditor: Format timeout message
+    QueryEditor --> User: Display timeout notification
+end
+
+deactivate RDSB
+deactivate ConnPool
+deactivate QueryService
+deactivate APIGateway
+deactivate QueryEditor
+
+@enduml
