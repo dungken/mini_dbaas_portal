@@ -1,0 +1,224 @@
+
+@startuml CloudDB Manager ERD
+
+' Style settings
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' Entity styling
+skinparam class {
+  BackgroundColor #E2EFFF
+  ArrowColor #303030
+  BorderColor #3C7FC0
+}
+
+package "RDS-A: Management Database" {
+  class Users {
+    + user_id: INT (PK)
+    --
+    email: VARCHAR(255)
+    password_hash: VARCHAR(255)
+    first_name: VARCHAR(100)
+    last_name: VARCHAR(100)
+    status: ENUM('active','inactive','pending')
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    last_login: TIMESTAMP
+    profile_image: VARCHAR(255)
+    is_email_verified: BOOLEAN
+    verification_token: VARCHAR(255)
+    verification_expiry: TIMESTAMP
+    password_reset_token: VARCHAR(255)
+    password_reset_expiry: TIMESTAMP
+    failed_login_attempts: INT
+    locked_until: TIMESTAMP
+  }
+  
+  class Tenants {
+    + tenant_id: INT (PK)
+    --
+    tenant_name: VARCHAR(100)
+    display_name: VARCHAR(200)
+    status: ENUM('active','inactive','suspended')
+    creation_date: TIMESTAMP
+    billing_email: VARCHAR(255)
+    subscription_plan: VARCHAR(50)
+    subscription_status: VARCHAR(50)
+    trial_expiry: TIMESTAMP
+  }
+  
+  class UserTenantRoles {
+    + id: INT (PK)
+    --
+    # user_id: INT (FK)
+    # tenant_id: INT (FK)
+    # role_id: INT (FK)
+    is_primary: BOOLEAN
+    assignment_date: TIMESTAMP
+    assigned_by: INT
+  }
+  
+  class Roles {
+    + role_id: INT (PK)
+    --
+    role_name: VARCHAR(50)
+    description: VARCHAR(255)
+    permissions: TEXT
+    is_system_role: BOOLEAN
+  }
+  
+  class DatabaseInstances {
+    + instance_id: INT (PK)
+    --
+    # tenant_id: INT (FK)
+    # created_by: INT (FK)
+    name: VARCHAR(64)
+    display_name: VARCHAR(100)
+    schema_name: VARCHAR(64)
+    status: ENUM('running','stopped','deleted')
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    last_accessed: TIMESTAMP
+    db_size: BIGINT
+    is_template: BOOLEAN
+    template_source: INT
+    description: TEXT
+    auto_stop: BOOLEAN
+    auto_stop_minutes: INT
+    deleted_at: TIMESTAMP
+    purge_scheduled_at: TIMESTAMP
+  }
+  
+  class Connections {
+    + connection_id: INT (PK)
+    --
+    # instance_id: INT (FK)
+    host: VARCHAR(255)
+    port: INT
+    username: VARCHAR(100)
+    password_encrypted: VARCHAR(255)
+    encryption_key_id: VARCHAR(100)
+    max_connections: INT
+    idle_timeout_seconds: INT
+  }
+  
+  class QueryHistory {
+    + query_id: INT (PK)
+    --
+    # user_id: INT (FK)
+    # instance_id: INT (FK)
+    query_text: TEXT
+    execution_time_ms: INT
+    row_count: INT
+    status: ENUM('success','error','timeout')
+    error_message: TEXT
+    executed_at: TIMESTAMP
+    ip_address: VARCHAR(45)
+    is_favorite: BOOLEAN
+    query_type: ENUM('select','dml','ddl','other')
+    affected_rows: INT
+  }
+  
+  class ResourceQuotas {
+    + quota_id: INT (PK)
+    --
+    # tenant_id: INT (FK)
+    # user_id: INT (FK)
+    resource_type: VARCHAR(50)
+    max_value: INT
+    current_usage: INT
+    update_timestamp: TIMESTAMP
+    alert_threshold: INT
+    alert_triggered: BOOLEAN
+  }
+  
+  class AuditLogs {
+    + log_id: INT (PK)
+    --
+    # user_id: INT (FK)
+    # tenant_id: INT (FK)
+    action: VARCHAR(100)
+    entity_type: VARCHAR(50)
+    entity_id: INT
+    old_values: TEXT
+    new_values: TEXT
+    ip_address: VARCHAR(45)
+    user_agent: VARCHAR(255)
+    timestamp: TIMESTAMP
+    status: VARCHAR(50)
+  }
+  
+  class Invitations {
+    + invitation_id: INT (PK)
+    --
+    # tenant_id: INT (FK)
+    # invited_by: INT (FK)
+    # role_id: INT (FK)
+    email: VARCHAR(255)
+    token: VARCHAR(255)
+    status: ENUM('pending','accepted','expired')
+    created_at: TIMESTAMP
+    expires_at: TIMESTAMP
+    accepted_at: TIMESTAMP
+    message: TEXT
+  }
+  
+  class UserPreferences {
+    + preference_id: INT (PK)
+    --
+    # user_id: INT (FK)
+    preference_key: VARCHAR(100)
+    preference_value: TEXT
+    updated_at: TIMESTAMP
+  }
+  
+  class Metrics {
+    + metric_id: INT (PK)
+    --
+    # tenant_id: INT (FK)
+    # instance_id: INT (FK)
+    # user_id: INT (FK)
+    metric_name: VARCHAR(100)
+    metric_value: DOUBLE
+    timestamp: TIMESTAMP
+    aggregation_period: VARCHAR(20)
+  }
+}
+
+package "RDS-B: Sandbox Database" {
+  note "Each tenant gets isolated database schemas" as N1
+
+  class SystemTables {
+    + tenant_prefix_table_name
+    --
+    Various tables to store actual
+    user database content (dynamically
+    created based on user actions)
+  }
+}
+
+' Relationships
+Users "1" -- "0..*" UserTenantRoles
+Tenants "1" -- "0..*" UserTenantRoles
+Roles "1" -- "0..*" UserTenantRoles
+Users "1" -- "0..*" QueryHistory
+Users "1" -- "0..*" AuditLogs
+Users "1" -- "0..*" UserPreferences
+Users "1" -- "0..*" Invitations : invited by
+Tenants "1" -- "0..*" Invitations
+Roles "1" -- "0..*" Invitations
+Tenants "1" -- "0..*" DatabaseInstances
+Users "1" -- "0..*" DatabaseInstances : created by
+DatabaseInstances "1" -- "1" Connections
+DatabaseInstances "1" -- "0..*" QueryHistory
+Tenants "1" -- "0..*" AuditLogs
+Tenants "1" -- "0..*" ResourceQuotas
+Users "0..1" -- "0..*" ResourceQuotas
+DatabaseInstances "0..1" -- "0..*" Metrics
+Tenants "0..1" -- "0..*" Metrics
+Users "0..1" -- "0..*" Metrics
+
+@enduml
