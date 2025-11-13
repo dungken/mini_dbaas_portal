@@ -1,4 +1,4 @@
-### Board: Sprint 4 (Tuần 4) - Vai trò Super Admin & Quản lý Đa (Multi-Tenancy)
+### [Board: Sprint 4 (Tuần 4) - Vai trò Super Admin & Quản lý Đa (Multi-Tenancy)](https://trello.com/invite/b/691599d2480a39559f23608e/ATTIab72a689d2b559ca8eee11f456c589525CBE47CD/sprint-4-tuần-4-vai-tro-super-admin-quản-ly-da-multi-tenancy)
 
 **Mục tiêu Sprint 4:** Hoàn thành các tính năng cho vai trò "Super Admin" (Quản lý Tenant, Đặt Quota, Cấu hình Hệ thống). Thực thi (Enforce) các giới hạn Quota và hoàn thiện luồng "Mời người dùng" (Invitation).
 

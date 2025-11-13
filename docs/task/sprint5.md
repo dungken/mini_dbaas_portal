@@ -1,4 +1,4 @@
-### Board: Sprint 5 (Tuần 5) - Hoàn thiện, Logging & Sửa lỗi (Polish, Logging & Bug Bash)
+### [Board: Sprint 5 (Tuần 5) - Hoàn thiện, Logging & Sửa lỗi (Polish, Logging & Bug Bash)](https://trello.com/invite/b/69159be76126f68263093242/ATTIa78c8537dfb3f9fc2f648d89076951288BA134D3/sprint-5-tuần-5-hoan-thiện-logging-sửa-lỗi-polish-logging-bug-bash)
 
 **Mục tiêu Sprint 5:** Hoàn thành các tính năng xuyên suốt (Audit Log, Metrics), triển khai Soft Delete và User Preferences, sửa lỗi từ các sprint trước, và chuẩn bị cho demo cuối cùng.
 

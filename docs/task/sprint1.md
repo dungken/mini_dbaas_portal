@@ -1,4 +1,4 @@
-### Board: Sprint 1 (Tuần 1) - Nền tảng & Xác thực
+### [Board: Sprint 1 (Tuần 1) - Nền tảng & Xác thực](https://trello.com/invite/b/69157db5bb542dcfbca3822a/ATTI3638dcf60a939bb1167f05c1a3a4d07899C8C112/dự-an-dbaas-sprint-1)
 #### Epic 1: [Hạ tầng AWS] 🌩️ (Provisioning)
 
 * `[AWS/Kiểm tra]` Xác nhận các quyền của "Federated User" (voclabs).

@@ -1,4 +1,4 @@
-### Board: Sprint 3 (Tuần 3) - Triển khai Vai trò Developer & Tenant Admin
+### [Board: Sprint 3 (Tuần 3) - Triển khai Vai trò Developer & Tenant Admin](https://trello.com/invite/b/691596ee5fc4a30458cd0ca7/ATTIfd017c9ec58d1ac02ce6d2b09735eb5087C7C350/sprint-3-tuần-3-triển-khai-vai-tro-developer-tenant-admin)
 
 **Mục tiêu Sprint 3:** Hoàn thành các tính năng cho vai trò "Developer" (DML, DDL, Quản lý Instance) và "Tenant Admin" (Quản lý User, Metrics cơ bản), dựa trên nền tảng RBAC (Role-Based Access Control).
 

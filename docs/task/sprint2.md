@@ -1,4 +1,4 @@
-### Board: Sprint 2 (Tuần 2) - Lõi Query & Bảo mật Multi-Tenant
+### [Board: Sprint 2 (Tuần 2) - Lõi Query & Bảo mật Multi-Tenant](https://trello.com/invite/b/69157fd61028c01ba9d80b7d/ATTIe333821ae6f23188256000b595d6bf9f03F56589/dự-an-dbaas-sprint-2)
 
 **Mục tiêu Sprint 2:** Hoàn thành luồng "Viewer" (Xem schema, chạy `SELECT`, xem kết quả). Triển khai cơ chế "Schema-per-Tenant" và các biện pháp bảo mật/hiệu năng (cách ly user MySQL, đặt timeout).
 
