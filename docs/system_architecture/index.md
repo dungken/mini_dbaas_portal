@@ -19,7 +19,7 @@ The user interface consists of six primary modules:
 
 The frontend communicates exclusively with the backend services via REST APIs, with all sensitive operations secured through JWT tokens.
 
-### 2. Backend Layer (Node.js TypeScript)
+### 2. Backend Layer (Rust)
 
 The application logic is organized into specialized services:
 
@@ -39,7 +39,7 @@ This service-oriented approach allows for:
 
 The cloud environment consists of:
 
-- **EC2 Server**: Hosts the Node.js runtime environment that executes all backend services
+- **EC2 Server**: Hosts the Rust runtime environment that executes all backend services
 - **RDS-A (Management Database)**: MySQL database storing all system-critical information:
   - User accounts and authentication data
   - Tenant configuration and billing information
@@ -105,4 +105,4 @@ The architecture supports horizontal and vertical scaling:
 - Database instances can be scaled based on workload requirements
 - Connection pooling optimizes resource usage as user numbers grow
 
-This architecture provides a solid foundation for the 3-week MVP while establishing patterns that will support future growth and feature expansion, balancing immediate deliverability with long-term scalability.
+This architecture provides a solid foundation for the 5-week MVP while establishing patterns that will support future growth and feature expansion, balancing immediate deliverability with long-term scalability.

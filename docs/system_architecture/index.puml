@@ -19,7 +19,7 @@ package "Frontend (React TypeScript)" {
   component "Admin Dashboard" as FE_Admin
 }
 
-package "Backend (Node.js TypeScript)" {
+package "Backend (Rust)" {
   component "Auth Service" as BE_Auth
   component "DB Service" as BE_DB
   component "Query Service" as BE_Query
@@ -30,7 +30,7 @@ package "Backend (Node.js TypeScript)" {
 
 node "AWS Cloud" {
   node "EC2 Server" as AppServer {
-    component "Node.js Runtime" as NodeRuntime
+    component "Rust Runtime" as RustRuntime
   }
   
   database "RDS-A: Management DB" as ManagementDB {
@@ -64,7 +64,7 @@ BE_Query --> BE_Pool
 BE_Pool --> SandboxDB
 
 ' Host connections
-AppServer --> NodeRuntime
-NodeRuntime --> Backend : Executes
+AppServer --> RustRuntime
+RustRuntime --> Backend : Executes
 
 @enduml
