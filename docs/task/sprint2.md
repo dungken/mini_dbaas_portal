@@ -43,35 +43,35 @@
 * `[BE/Log]` Tích hợp `AuditLogs`: Ghi lại hành động "User X executed SELECT query" vào bảng `AuditLogs`.
 * `[BE/Log]` Tích hợp `QueryHistory`: Ghi lại toàn bộ text của query, `user_id`, và `execution_time` (thời gian thực thi) vào bảng `QueryHistory`.
 
-#### Epic 5: [Frontend] 🖥️ (Main Layout & DB Explorer)
+#### Epic 5: [Frontend] 🖥️ (Main Layout & DB Explorer) ✅
 
-* `[FE/Core]` Cập nhật `MainLayout` (từ Sprint 1): Thêm cấu trúc Sidebar (bên trái) và khu vực Content (bên phải).
-* `[BE/DB]` Tạo API `GET /api/v1/db/schema` (Browse Database Objects).
+* ✅ `[FE/Core]` `MainLayout` đã có sẵn từ Sprint 1 với Sidebar và Content area (đã có trong `AdminLayout`).
+* ⏳ `[BE/DB]` Tạo API `GET /api/v1/db/schema` (Browse Database Objects) - **Backend task**.
     * *Task phụ (BE):* Logic `GET /schema` phải dùng `Pool` của tenant (Epic 1) để chạy `SHOW TABLES;` và `SHOW COLUMNS FROM ...;`.
-* `[FE/Explorer]` Xây dựng Giao diện `DB Explorer` (Module).
-* `[FE/Explorer]` Tích hợp API `GET /db/schema` và hiển thị dưới dạng Tree-view (cây thư mục).
+* ✅ `[FE/Explorer]` Xây dựng Giao diện `DB Explorer` tại `src/app/(admin)/explorer/page.tsx`.
+* ✅ `[FE/Explorer]` Tích hợp API `GET /api/v1/db/schema` (với mock data fallback) và hiển thị dưới dạng Tree-view trong `src/components/db-explorer/DatabaseTree.tsx`.
 
-#### Epic 6: [Frontend] ⌨️ (Query Editor Module)
+#### Epic 6: [Frontend] ⌨️ (Query Editor Module) ✅
 
-* `[FE/Query]` Xây dựng Giao diện `Query Editor` (Module).
-* `[FE/Query]` Tích hợp thư viện code editor (vd: Monaco, CodeMirror) vào component.
-* `[FE/Query]` Cấu hình SQL syntax highlighting cho editor.
-* `[FE/Query]` Tạo nút "Run" và state (Zustand) để lưu trữ nội dung query, kết quả (data), hoặc lỗi (error).
-* `[FE/Query]` Tích hợp API: Nút "Run" gọi `POST /api/v1/query/select` với nội dung text từ editor.
+* ✅ `[FE/Query]` Xây dựng Giao diện `Query Editor` tại `src/app/(admin)/query/page.tsx`.
+* ✅ `[FE/Query]` Tích hợp Monaco Editor vào component `src/components/query-editor/QueryEditor.tsx` (dynamic import để tránh SSR issues).
+* ✅ `[FE/Query]` Cấu hình SQL syntax highlighting cho Monaco Editor.
+* ✅ `[FE/Query]` Tạo nút "Run" và Zustand store tại `src/lib/store/queryStore.ts` để lưu trữ query, result, error.
+* ✅ `[FE/Query]` Tích hợp API: Nút "Run" gọi `POST /api/v1/query/select` (với mock data fallback) trong `src/lib/api/dbService.ts`.
 
-#### Epic 7: [Frontend] 📊 (Table Viewer Module)
+#### Epic 7: [Frontend] 📊 (Table Viewer Module) ✅
 
-* `[FE/Table]` Xây dựng Giao diện `Table Viewer` (Module).
-* `[FE/Table]` Tạo component Bảng (Grid-based) (vd: dùng `react-table` hoặc `<table>` HTML).
-* `[FE/Table]` Component này sẽ đọc state (kết quả hoặc lỗi) từ `Query Editor` (Epic 6).
-* `[FE/Table]` Hiển thị kết quả (View Table Data) hoặc thông báo lỗi (vd: "Query timed out", "Syntax error...").
+* ✅ `[FE/Table]` Xây dựng Giao diện `Table Viewer` trong `src/components/query-editor/QueryResult.tsx`.
+* ✅ `[FE/Table]` Tạo component Bảng (HTML `<table>`) để hiển thị kết quả query.
+* ✅ `[FE/Table]` Component đọc state (result, error, loading) từ Zustand store (`useQueryStore`).
+* ✅ `[FE/Table]` Hiển thị kết quả (columns + rows) hoặc thông báo lỗi ("Query timed out", "Syntax error...").
 
-#### Epic 8: [Frontend] 🚀 (DB Instance UI)
+#### Epic 8: [Frontend] 🚀 (DB Instance UI) ✅
 
-* `[FE/DB]` Xây dựng Giao diện `Instance Management`: Tạo một trang mới (vd: `/instances`).
-* `[FE/DB]` Tạo UI cho `Create DB Instance` (có thể là một nút "Tạo Sandbox DB Mới").
-* `[FE/DB]` Tích hợp API `POST /api/v1/instances` (Epic 2).
-* `[FE/DB]` (Task phụ) Tạo API `GET /api/v1/instances` và hiển thị danh sách các instance đã tạo (đọc từ bảng `DatabaseInstances`).
+* ✅ `[FE/DB]` Xây dựng Giao diện `Instance Management` tại `src/app/(admin)/instances/page.tsx`.
+* ✅ `[FE/DB]` Tạo UI cho `Create DB Instance` với Modal form và nút "Create Instance".
+* ✅ `[FE/DB]` Tích hợp API `POST /api/v1/instances` (với mock data fallback).
+* ✅ `[FE/DB]` Tích hợp API `GET /api/v1/instances` (với mock data fallback) và hiển thị danh sách instances.
 
 #### Epic 9: [Testing] 🧪 (Kiểm thử Thủ công)
 

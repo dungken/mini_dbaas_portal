@@ -60,38 +60,42 @@
         4.  Tạo liên kết trong `UserTenantRoles` (dựa trên `tenant_id`, `role` trong `Invitations`).
         5.  Xóa `token` / hàng trong `Invitations`.
 
-#### Epic 7: [Frontend] 👑 (Admin Dashboard - UI Super Admin)
+#### Epic 7: [Frontend] 👑 (Admin Dashboard - UI Super Admin) ✅
 
-* `[FE/Admin]` Xây dựng Module `Admin Dashboard`.
-* `[FE/Admin]` Tạo trang mới `/admin`, bảo vệ bằng `WithRole("SuperAdmin")`.
-* `[FE/Admin]` UI `Manage Tenants`:
-    * Tích hợp `GET /admin/tenants` (Epic 2) để hiển thị bảng tenants.
-    * Tạo Form/Modal "Create Tenant" và "Edit Tenant" (Tích hợp `POST`/`PUT` /admin/tenants).
-* `[FE/Admin]` UI `Set Resource Quotas`:
-    * Thêm nút "Manage Quotas" vào mỗi tenant.
-    * Tạo Form (ví dụ: `max_users`, `max_dbs`) và tích hợp `GET`/`PUT /admin/tenants/:id/quotas` (Epic 3).
-* `[FE/Admin]` UI `Configure System Settings`:
-    * Tạo trang `/admin/settings`.
-    * Tạo Form (ví dụ: `password_min_length`) và tích hợp `GET`/`PUT /admin/settings` (Epic 5).
+* ✅ `[FE/Admin]` Xây dựng Module `Admin Dashboard` tại `src/app/(admin)/admin/page.tsx`.
+* ✅ `[FE/Admin]` Tạo trang mới `/admin`, bảo vệ bằng `WithRole({ roles: ['SuperAdmin', 'admin'], ... })`.
+* ✅ `[FE/Admin]` UI `Manage Tenants`:
+    * ✅ Tích hợp `GET /admin/tenants` (với mock data fallback) trong `src/lib/api/adminService.ts`.
+    * ✅ Tạo Form/Modal "Create Tenant" và "Edit Tenant" (Tích hợp `POST`/`PUT /admin/tenants` với mock data).
+    * ✅ Hiển thị bảng tenants với status badges (active/suspended).
+* ✅ `[FE/Admin]` UI `Set Resource Quotas`:
+    * ✅ Tạo trang `/admin/tenants/[id]/quotas` tại `src/app/(admin)/admin/tenants/[id]/quotas/page.tsx`.
+    * ✅ Thêm nút "Manage Quotas" vào mỗi tenant trong Admin Dashboard.
+    * ✅ Tạo Form (max_users, max_db_instances) và tích hợp `GET`/`PUT /admin/tenants/:id/quotas` (với mock data).
+* ✅ `[FE/Admin]` UI `Configure System Settings`:
+    * ✅ Tạo trang `/admin/settings` tại `src/app/(admin)/admin/settings/page.tsx`.
+    * ✅ Tạo Form (password_min_length, password_require_uppercase, password_require_numbers) và tích hợp `GET`/`PUT /admin/settings` (với mock data).
 
-#### Epic 8: [Frontend] 📬 (Hoàn thiện UI Mời - Invitation Flow)
+#### Epic 8: [Frontend] 📬 (Hoàn thiện UI Mời - Invitation Flow) ✅
 
-* `[FE/User]` Cập nhật Form "Invite User" (Sprint 3): Sau khi gửi, chỉ hiển thị "Invitation Sent" (không còn mock link).
-* `[FE/Auth]` Tạo trang public (layout `AuthLayout`) mới: `/accept-invite`.
-* `[FE/Auth]` Logic trang `/accept-invite`:
-    1.  Lấy `token` từ URL.
-    2.  Gọi `GET /auth/invite/details` (Epic 6) để hiển thị (vd: "Bạn đã được mời vào Tenant X").
-    3.  Hiển thị Form (password, first_name...) và gọi `POST /auth/accept-invite` (Epic 6).
-    4.  Nếu thành công, tự động đăng nhập (lưu token) và redirect đến trang Dashboard.
+* ✅ `[FE/User]` Cập nhật Form "Invite User" (Sprint 3): Sau khi gửi, chỉ hiển thị "Invitation Sent" (không còn hiển thị mock link trong UI, chỉ log trong console ở localhost).
+* ✅ `[FE/Auth]` Tạo trang public (layout `AuthLayout`) mới: `/accept-invite` tại `src/app/(full-width-pages)/(auth)/accept-invite/page.tsx`.
+* ✅ `[FE/Auth]` Logic trang `/accept-invite`:
+    1. ✅ Lấy `token` từ URL query param.
+    2. ✅ Gọi `GET /auth/invite/details` (với mock data fallback) trong `src/lib/api/invitationService.ts` để hiển thị thông tin (vd: "Bạn đã được mời vào Tenant X với vai trò Y").
+    3. ✅ Hiển thị Form (first_name, last_name, password, confirm_password) và gọi `POST /auth/accept-invite` (với mock data).
+    4. ✅ Nếu thành công, tự động đăng nhập (lưu token vào authStore) và redirect đến trang Dashboard.
 
-#### Epic 9: [Frontend] 🚧 (Hiển thị Lỗi Quota - UI)
+#### Epic 9: [Frontend] 🚧 (Hiển thị Lỗi Quota - UI) ✅
 
-* `[FE/User]` Cập nhật Form "Invite User" (Sprint 3):
-    * Bắt (catch) lỗi 403 từ API (Epic 4).
-    * Hiển thị thông báo lỗi thân thiện (vd: "Không thể mời người dùng. Đã đạt giới hạn quota người dùng cho tenant này.").
-* `[FE/DB]` Cập nhật Trang "Instances" (Sprint 2):
-    * Bắt (catch) lỗi 403 từ API (Epic 4).
-    * Hiển thị thông báo lỗi (vd: "Không thể tạo instance. Đã đạt giới hạn quota CSDL.").
+* ✅ `[FE/User]` Cập nhật Form "Invite User" (Sprint 3) tại `src/app/(admin)/users/page.tsx`:
+    * ✅ Bắt (catch) lỗi 403 từ API (Epic 4).
+    * ✅ Kiểm tra nếu error message chứa từ "quota" hoặc "Quota".
+    * ✅ Hiển thị thông báo lỗi thân thiện bằng tiếng Việt: "Không thể mời người dùng. Đã đạt giới hạn quota người dùng cho tenant này. Vui lòng liên hệ Super Admin để tăng quota.".
+* ✅ `[FE/DB]` Cập nhật Trang "Instances" (Sprint 2) tại `src/app/(admin)/instances/page.tsx`:
+    * ✅ Bắt (catch) lỗi 403 từ API (Epic 4).
+    * ✅ Kiểm tra nếu error message chứa từ "quota" hoặc "Quota".
+    * ✅ Hiển thị thông báo lỗi bằng tiếng Việt: "Không thể tạo instance. Đã đạt giới hạn quota CSDL cho tenant này. Vui lòng liên hệ Super Admin để tăng quota.".
 
 #### Epic 10: [Testing] 🧪 (Kiểm thử Toàn diện)
 

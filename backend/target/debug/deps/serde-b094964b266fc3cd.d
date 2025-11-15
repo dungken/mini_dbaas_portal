@@ -1,0 +1,14 @@
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/serde-b094964b266fc3cd.d: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/serde-909101484fec7fe5/out/private.rs
+
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/libserde-b094964b266fc3cd.rlib: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/serde-909101484fec7fe5/out/private.rs
+
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/libserde-b094964b266fc3cd.rmeta: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/serde-909101484fec7fe5/out/private.rs
+
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/serde-909101484fec7fe5/out/private.rs:
+
+# env-dep:OUT_DIR=/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/serde-909101484fec7fe5/out

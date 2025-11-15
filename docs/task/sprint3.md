@@ -63,36 +63,38 @@
 * `[BE/Admin]` Áp dụng `require_role(Role::TenantAdmin)`.
 * `[BE/Admin]` Logic `GET /metrics`: Truy vấn `QueryHistory` và `AuditLogs`, `COUNT(*)` các hàng thuộc `tenant_id` của admin. Trả về JSON (ví dụ: `{"total_queries": 150, "total_logs": 300}`).
 
-#### Epic 7: [Frontend] 🎨 (Nâng cấp UI cho "Developer")
+#### Epic 7: [Frontend] 🎨 (Nâng cấp UI cho "Developer") ✅
 
-* `[FE/Core]` Cập nhật `authStore` (Zustand): Lưu trữ `role` của user (lấy từ payload JWT) vào state.
-* `[FE/Core]` Tạo HOC (Component bậc cao) `WithRole` để ẩn/hiện các thành phần UI (ví dụ: `WithRole("Developer", <Button>...`)
-* `[FE/Query]` Cập nhật `Query Editor`:
-    * Tự động phát hiện loại query (SELECT, DML, DDL) dựa trên từ khóa.
-    * Gọi đúng API ( `/query/select`, `/query/dml`, `/query/ddl`) dựa trên loại query.
-* `[FE/Table]` Cập nhật `Table Viewer`: Xử lý kết quả DML/DDL (hiển thị thông báo "Query OK, 2 rows affected") thay vì cố gắng render bảng.
-* `[FE/Explorer]` Cập nhật `DB Explorer`: Thêm nút "Refresh Schema" (để gọi lại `GET /schema` sau khi chạy DDL).
+* ✅ `[FE/Core]` `authStore` (Zustand) đã lưu trữ `role` của user trong `user` object (từ JWT payload).
+* ✅ `[FE/Core]` Tạo component `WithRole` tại `src/components/auth/WithRole.tsx` để ẩn/hiện UI dựa trên role (`WithRole({ roles: ['Developer'], children: ... })`).
+* ✅ `[FE/Query]` Cập nhật `Query Editor` tại `src/components/query-editor/QueryEditor.tsx`:
+    * ✅ Tự động phát hiện loại query (SELECT, DML, DDL) bằng hàm `detectQueryType()`.
+    * ✅ Gọi đúng API (`/query/select`, `/query/dml`, `/query/ddl`) dựa trên loại query.
+    * ✅ Hiển thị query type badge (SELECT/DML/DDL).
+    * ✅ Kiểm tra role permissions (chỉ Developer/TenantAdmin/admin có thể chạy DML/DDL).
+* ✅ `[FE/Table]` Cập nhật `Table Viewer` tại `src/components/query-editor/QueryResult.tsx`: Xử lý kết quả DML/DDL (hiển thị "Query OK, 2 rows affected" hoặc "Table created successfully") với màu sắc phù hợp.
+* ✅ `[FE/Explorer]` Cập nhật `DB Explorer` tại `src/components/db-explorer/DatabaseTree.tsx`: Thêm nút "Refresh Schema" để gọi lại `GET /schema`.
 
-#### Epic 8: [Frontend] ♻️ (UI Quản lý Instance)
+#### Epic 8: [Frontend] ♻️ (UI Quản lý Instance) ✅
 
-* `[FE/DB]` Cập nhật trang `/instances` (từ Sprint 2).
-* `[FE/DB]` Thêm nút "Delete" (Xóa) và "Start/Stop" (Bật/Tắt) vào danh sách instance.
-* `[FE/DB]` Tích hợp API `DELETE /instances/:id` và `POST /instances/:id/toggle`.
-* `[FE/DB]` Hiển thị `status` ('active', 'stopped') của instance trong danh sách.
-* `[FE/Query]` (Cải tiến) Vô hiệu hóa nút "Run" trong `Query Editor` nếu instance đang chọn có `status` là 'stopped'.
+* ✅ `[FE/DB]` Cập nhật trang `/instances` tại `src/app/(admin)/instances/page.tsx`.
+* ✅ `[FE/DB]` Thêm nút "Delete" và "Start/Stop" vào danh sách instance (chỉ hiển thị cho Developer/TenantAdmin/admin).
+* ✅ `[FE/DB]` Tích hợp API `DELETE /instances/:id` và `POST /instances/:id/toggle` (với mock data fallback) trong `src/lib/api/dbService.ts`.
+* ✅ `[FE/DB]` Hiển thị `status` ('active', 'stopped') với badge màu sắc trong danh sách instance.
+* ⏳ `[FE/Query]` (Cải tiến) Vô hiệu hóa nút "Run" trong `Query Editor` nếu instance có `status` là 'stopped' - **TODO: cần tích hợp instance selection**.
 
-#### Epic 9: [Frontend] 🧑‍🤝‍🧑 (UI Quản lý User - "Tenant Admin")
+#### Epic 9: [Frontend] 🧑‍🤝‍🧑 (UI Quản lý User - "Tenant Admin") ✅
 
-* `[FE/User]` Xây dựng Module `User Management`.
-* `[FE/User]` Tạo trang mới `/users`, bảo vệ bằng `WithRole("TenantAdmin")`.
-* `[FE/User]` Tích hợp API `GET /tenant/users` để hiển thị danh sách user.
-* `[FE/User]` Xây dựng UI (Form/Modal) "Invite User" (Tích hợp `POST /users/invite`).
-* `[FE/User]` Xây dựng UI (Dropdown) "Manage Roles" (Tích hợp `PUT /tenant/users/:id/role`).
-* `[FE/User]` Xây dựng UI (Button) "Deactivate User" (Tích hợp `DELETE /tenant/users/:id`).
+* ✅ `[FE/User]` Xây dựng Module `User Management` tại `src/app/(admin)/users/page.tsx`.
+* ✅ `[FE/User]` Tạo trang mới `/users`, bảo vệ bằng `WithRole({ roles: ['TenantAdmin', 'admin'], ... })`.
+* ✅ `[FE/User]` Tích hợp API `GET /tenant/users` (với mock data fallback) trong `src/lib/api/userService.ts`.
+* ✅ `[FE/User]` Xây dựng UI (Form/Modal) "Invite User" (Tích hợp `POST /users/invite` với mock data).
+* ✅ `[FE/User]` Xây dựng UI (Dropdown/Select) "Manage Roles" (Tích hợp `PUT /tenant/users/:id/role`).
+* ✅ `[FE/User]` Xây dựng UI (Button) "Deactivate User" (Tích hợp `DELETE /tenant/users/:id`).
 
-#### Epic 10: [Frontend] 📈 (UI Dashboard Metrics - "Tenant Admin")
+#### Epic 10: [Frontend] 📈 (UI Dashboard Metrics - "Tenant Admin") ✅
 
-* `[FE/Admin]` Xây dựng Module `Admin Dashboard`.
-* `[FE/Admin]` Tạo trang mới `/dashboard`, bảo vệ bằng `WithRole("TenantAdmin")`.
-* `[FE/Admin]` Tích hợp API `GET /api/v1/metrics/tenant` (Epic 6).
-* `[FE/Admin]` Hiển thị các chỉ số cơ bản (vd: "Tổng số truy vấn: 150") (View System Metrics). (Chưa cần biểu đồ phức tạp).
+* ✅ `[FE/Admin]` Xây dựng Module `Admin Dashboard` tại `src/app/(admin)/admin-dashboard/page.tsx`.
+* ✅ `[FE/Admin]` Tạo trang mới `/admin-dashboard`, bảo vệ bằng `WithRole({ roles: ['TenantAdmin', 'admin'], ... })`.
+* ✅ `[FE/Admin]` Tích hợp API `GET /api/v1/metrics/tenant` (với mock data fallback) trong `src/lib/api/metricsService.ts`.
+* ✅ `[FE/Admin]` Hiển thị các chỉ số cơ bản dưới dạng Card metrics (Total Queries, Total Logs, Total Instances, Active Users).

@@ -1,0 +1,14 @@
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/thiserror-a2f4a8e7b0834950.d: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/thiserror-6f45f823105f4291/out/private.rs
+
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/libthiserror-a2f4a8e7b0834950.rlib: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/thiserror-6f45f823105f4291/out/private.rs
+
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/deps/libthiserror-a2f4a8e7b0834950.rmeta: /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/thiserror-6f45f823105f4291/out/private.rs
+
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs:
+/home/dungken/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs:
+/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/thiserror-6f45f823105f4291/out/private.rs:
+
+# env-dep:OUT_DIR=/home/dungken/Desktop/Workspace/mini_dbaas_portal/backend/target/debug/build/thiserror-6f45f823105f4291/out

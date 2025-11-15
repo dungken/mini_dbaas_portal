@@ -33,28 +33,29 @@
 * `[BE/User]` Cập nhật API `GET /users/me` (Sprint 1): Trả về thông tin `first_name`, `last_name`... (theo `erd.md`).
 * `[BE/User]` Tạo API `PUT /api/v1/users/me` (cập nhật `first_name`, `last_name`...).
 
-#### Epic 5: [Frontend] 🎨 (Hoàn thiện UI "Manage Profile")
+#### Epic 5: [Frontend] 🎨 (Hoàn thiện UI "Manage Profile") ✅
 
-* `[FE/User]` Cập nhật trang `Manage Profile` (từ Sprint 1).
-* `[FE/User]` Thêm Form "Cập nhật Thông tin" (`first_name`, `last_name`) và tích hợp API `PUT /users/me` (Epic 4).
-* `[FE/User]` Thêm Form "Tùy chỉnh" (ví dụ: `notification_preferences`, `default_theme`...).
-* `[FE/User]` Tích hợp API `GET`/`PUT /users/me/preferences` (Epic 4).
-* `[FE/User]` Cải thiện Form "Đổi mật khẩu" (Sprint 1) nếu cần.
+* ✅ `[FE/User]` Cập nhật trang `Manage Profile` (từ Sprint 1) tại `src/app/(admin)/(others-pages)/profile/page.tsx`.
+* ✅ `[FE/User]` Thêm Form "Cập nhật Thông tin" (`first_name`, `last_name`, `phone`, `bio`) trong `src/components/user-profile/UserInfoCard.tsx` và tích hợp API `PUT /users/me` (với mock data fallback) trong `src/lib/api/userService.ts`.
+* ✅ `[FE/User]` Thêm Form "Tùy chỉnh" (`notification_preferences`, `default_theme`, `email_notifications`) trong `src/components/user-profile/UserPreferencesCard.tsx`.
+* ✅ `[FE/User]` Tích hợp API `GET`/`PUT /users/me/preferences` (với mock data fallback) trong `src/lib/api/userService.ts`.
+* ✅ `[FE/User]` Form "Đổi mật khẩu" đã có sẵn từ Sprint 1 (ChangePasswordCard).
 
-#### Epic 6: [Frontend] 📊 (Hoàn thiện Dashboard Metrics)
+#### Epic 6: [Frontend] 📊 (Hoàn thiện Dashboard Metrics) ✅
 
-* `[FE/Admin]` Cập nhật Dashboard (Tenant Admin) (Sprint 3).
-* `[FE/Admin]` Tích hợp thư viện biểu đồ (vd: `recharts`).
-* `[FE/Admin]` Tạo API `GET /metrics/tenant/charts` (đọc dữ liệu đã aggregate từ `Metrics`).
-* `[FE/Admin]` Hiển thị biểu đồ "Query execution time" và "Resource utilization".
-* `[FE/Admin]` (Super Admin) Cập nhật Dashboard (Super Admin) để xem metrics toàn hệ thống.
+* ✅ `[FE/Admin]` Cập nhật Dashboard (Tenant Admin) (Sprint 3) tại `src/app/(admin)/admin-dashboard/page.tsx`.
+* ✅ `[FE/Admin]` Tích hợp thư viện biểu đồ `recharts` (đã cài đặt).
+* ✅ `[FE/Admin]` Tạo API `GET /metrics/tenant/charts` (với mock data fallback) trong `src/lib/api/metricsService.ts`.
+* ✅ `[FE/Admin]` Hiển thị biểu đồ "Query execution time" (LineChart) và "Resource utilization" (AreaChart) với ResponsiveContainer.
+* ✅ `[FE/Admin]` (Super Admin) Cập nhật Dashboard (Super Admin) có thể sử dụng `metricsService.getSystemMetrics()` và `metricsService.getSystemCharts()` (API endpoints: `/api/v1/admin/metrics` và `/api/v1/admin/metrics/charts`).
 
-#### Epic 7: [Frontend] 🛡️ (Hoàn thiện UI Audit Log)
+#### Epic 7: [Frontend] 🛡️ (Hoàn thiện UI Audit Log) ✅
 
-* `[BE/Admin]` Tạo API `GET /api/v1/audit-logs` (cho Tenant Admin, chỉ thấy log tenant của mình).
-* `[BE/Admin]` Tạo API `GET /api/v1/admin/audit-logs` (cho Super Admin, thấy tất cả).
-* `[FE/Admin]` Tạo trang mới `/audit-logs` (bảo vệ bằng `WithRole("TenantAdmin")`).
-* `[FE/Admin]` Hiển thị `AuditLogs` trong một bảng (table) với phân trang (pagination) và lọc (filter).
+* ⏳ `[BE/Admin]` Tạo API `GET /api/v1/audit-logs` (cho Tenant Admin, chỉ thấy log tenant của mình) - **TODO: Backend**.
+* ⏳ `[BE/Admin]` Tạo API `GET /api/v1/admin/audit-logs` (cho Super Admin, thấy tất cả) - **TODO: Backend**.
+* ✅ `[FE/Admin]` Tạo trang mới `/audit-logs` tại `src/app/(admin)/audit-logs/page.tsx` (bảo vệ bằng `WithRole({ roles: ['TenantAdmin', 'SuperAdmin', 'admin'], ... })`).
+* ✅ `[FE/Admin]` Hiển thị `AuditLogs` trong một bảng (table) với phân trang (pagination) và lọc (filter: action, resource_type, start_date, end_date).
+* ✅ `[FE/Admin]` Tích hợp API `GET /api/v1/audit-logs` và `GET /api/v1/admin/audit-logs` (với mock data fallback) trong `src/lib/api/auditLogService.ts`.
 
 #### Epic 8: [Hệ thống] 🐛 (Sửa lỗi - Bug Bash)
 

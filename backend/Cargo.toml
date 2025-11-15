@@ -1,0 +1,31 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# Axum - Web framework async
+axum = "0.7"
+
+# Tokio - Async runtime (cần cho Axum)
+tokio = { version = "1.0", features = ["full"] }
+
+# Dotenv - Đọc biến môi trường từ .env file
+dotenv = "0.15"
+
+# SQLx - Database toolkit (sẽ dùng sau)
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "mysql", "chrono"] }
+
+# BCrypt - Password hashing
+bcrypt = "0.15"
+
+# JSON Web Token
+jsonwebtoken = "9.0"
+
+# Serde - Serialization/Deserialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Tower - HTTP utilities (Axum sử dụng)
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors"] }

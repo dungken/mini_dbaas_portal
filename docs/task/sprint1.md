@@ -55,28 +55,31 @@
 * `[BE/User]` API `PUT /users/me/password` (Manage Profile - Change Password).
     * *Yêu cầu:* Phải được bảo vệ bằng Middleware `require_auth`.
 
-#### Epic 7: [Frontend] 🖥️ (Core React Setup)
+#### Epic 7: [Frontend] 🖥️ (Core Next.js Setup) ✅
 
-* `[FE/Core]` Khởi tạo dự án React + TypeScript.
-* `[FE/Core]` Cài đặt React Router, state management (Zustand), `axios`.
-* `[FE/Core]` Tạo `AuthLayout` (public) và `MainLayout` (private).
-* `[FE/Core]` Cấu hình `axios` (tạo interceptor tự động đính kèm JWT).
-* `[FE/Core]` Tạo logic `ProtectedRoute` (Route được bảo vệ) kiểm tra token trong state (Zustand).
+* ✅ `[FE/Core]` Khởi tạo dự án Next.js 15 + TypeScript (TailAdmin template).
+* ✅ `[FE/Core]` Cài đặt state management (Zustand), `axios`.
+  * **Note:** Next.js App Router không cần React Router (đã có routing built-in).
+* ✅ `[FE/Core]` Tạo `AuthLayout` (public) tại `src/app/(full-width-pages)/(auth)/layout.tsx`.
+* ✅ `[FE/Core]` Tạo `AdminLayout` (private) tại `src/app/(admin)/layout.tsx` với Sidebar và Header.
+* ✅ `[FE/Core]` Cấu hình `axios` với JWT interceptor tại `src/lib/api/axios.ts`.
+* ✅ `[FE/Core]` Tạo Zustand auth store tại `src/lib/store/authStore.ts`.
+* ✅ `[FE/Core]` Tạo component `ProtectedRoute` tại `src/components/auth/ProtectedRoute.tsx` để bảo vệ routes private (đã tích hợp vào `AdminLayout`).
 
-#### Epic 8: [Frontend] 👤 (Luồng Xác thực Mocked)
+#### Epic 8: [Frontend] 👤 (Luồng Xác thực Mocked) ✅
 
-* `[FE/Auth]` Xây dựng module `Authentication`.
-* `[FE/Auth]` Xây dựng trang `LoginPage` (Tích hợp API `POST /auth/login`).
-* `[FE/Auth]` Xây dựng trang `RegisterPage` (Tích hợp API `POST /auth/register`).
-* `[FE/Auth]` Xây dựng trang `ForgotPasswordPage` (Tích hợp API `POST /auth/forgot-password`).
-* `[FE/Auth/Mock]` Xây dựng trang `VerifyEmailPage`: Thêm một **ô input (tạm thời)** để dán `verification_token` (lấy từ log console backend).
-* `[FE/Auth/Mock]` Xây dựng trang `ResetPasswordPage`: Nhận `token` từ URL (để developer dán link) và tích hợp API `POST /auth/reset-password`.
+* ✅ `[FE/Auth]` Module `Authentication` đã có sẵn trong template.
+* ✅ `[FE/Auth]` Xây dựng trang `SignInPage` (`src/app/(full-width-pages)/(auth)/signin/page.tsx`) với `SignInForm` đã tích hợp API `POST /auth/login`.
+* ✅ `[FE/Auth]` Xây dựng trang `RegisterPage` (sử dụng `SignUpForm` có sẵn) tại `src/app/(full-width-pages)/(auth)/signup/page.tsx` - Tích hợp API `POST /auth/register`.
+* ✅ `[FE/Auth]` Xây dựng trang `ForgotPasswordPage` tại `src/app/(full-width-pages)/(auth)/forgot-password/page.tsx` - Tích hợp API `POST /auth/forgot-password`.
+* ✅ `[FE/Auth/Mock]` Xây dựng trang `VerifyEmailPage` tại `src/app/(full-width-pages)/(auth)/verify-email/page.tsx`: Có **ô input (tạm thời)** để dán `verification_token` (lấy từ log console backend) - Tích hợp API `GET /auth/verify-email?token=...`.
+* ✅ `[FE/Auth/Mock]` Xây dựng trang `ResetPasswordPage` tại `src/app/(full-width-pages)/(auth)/reset-password/page.tsx`: Nhận `token` từ URL query param và tích hợp API `POST /auth/reset-password`.
 
-#### Epic 9: [Frontend] 🧑‍💼 (Luồng Quản lý Hồ sơ)
+#### Epic 9: [Frontend] 🧑‍💼 (Luồng Quản lý Hồ sơ) ✅
 
-* `[FE/User]` Xây dựng trang `Manage Profile` (thuộc module User Management).
-* `[FE/User]` Tích hợp API `GET /users/me` để hiển thị thông tin.
-* `[FE/User]` Tạo form "Đổi mật khẩu" (Change Password) và tích hợp API `PUT /users/me/password`.
+* ✅ `[FE/User]` Trang `Manage Profile` đã có sẵn tại `src/app/(admin)/(others-pages)/profile/page.tsx` (sử dụng template TailAdmin).
+* ✅ `[FE/User]` Tích hợp API `GET /users/me` để hiển thị thông tin user trong `UserMetaCard` và `UserInfoCard` (có fallback mock data nếu API fails).
+* ✅ `[FE/User]` Tạo component `ChangePasswordCard` với form "Đổi mật khẩu" và tích hợp API `PUT /users/me/password` trong trang Profile.
 
 #### Epic 10: [DevOps] 🚀 (Deploy Thủ công)
 
